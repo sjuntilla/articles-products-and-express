@@ -1,0 +1,17 @@
+<h1>Add New Article</h1>
+<form method="POST" action="/articles">
+    <label for="name">Title</label>
+    <input type="text" name="title" id="title">
+    <label for="body">body</label>
+    <input type="text" name="body" id="body">
+    <label for="author">author</label>
+    <input type="text" name="author" id="author">
+    <input type="submit" value="Submit">
+</form>
+
+<h1>All Articles</h1>
+{{#each storage}}
+<h2>Title: {{title}}</h2>
+<h3>Author: {{author}}</h3>
+<p>{{body}}</p>
+{{/each}}

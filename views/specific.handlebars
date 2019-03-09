@@ -1,0 +1,15 @@
+<h1>{{title}}</h1>
+<h3>Author: {{author}}</h3>
+<p>{{body}}</p>
+
+<h1>Edit Article</h1>
+<form method="PUT" action="/articles">
+    <label for="Title">Title</label>
+    <input type="text" name="Title" id="Title" placeholder={{title}}>
+    <label for="body">body</label>
+    <input type="text" name="body" id="body" placeholder={{body}}>
+    <label for="author">Author</label>
+    <input type="text" name="author" id="author" placeholder={{author}}>
+    <input type="submit" value="Submit">
+</form>
+<a href="/articles">All Articles</a>

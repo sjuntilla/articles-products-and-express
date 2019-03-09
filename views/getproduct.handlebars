@@ -1,0 +1,11 @@
+<h1>{{name}}</h1>
+<h2>{{price}}</h2>
+<p>Current Stock: {{inventory}}</p>
+
+<form action="/products/{{paramsId}}/edit" method="GET">
+    <button type="submit">Edit Product</button>
+</form>
+
+<form action="/products" method="GET">
+    <button type="submit">Product List</button>
+</form>
