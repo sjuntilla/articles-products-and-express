@@ -5,21 +5,21 @@ exports.seed = function (knex, Promise) {
       // Inserts seed entries
       return knex('articles').insert([{
           id: 1,
-          title: 'fuck!',
-          desc: 'shit!!!',
-          author: 'whore!!'
+          title: 'fuck',
+          desc: 'you',
+          author: 'man'
         },
         {
           id: 2,
-          title: 'fuck!',
-          desc: 'shit!!!',
-          author: 'whore!!'
+          title: 'fuck',
+          desc: 'you',
+          author: 'man'
         },
         {
           id: 3,
-          title: 'fuck!',
-          desc: 'shit!!!',
-          author: 'whore!!'
+          title: 'fuck',
+          desc: 'you',
+          author: 'man'
         }
       ]);
     });
