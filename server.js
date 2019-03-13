@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const ehbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const PORT = 8181;
+const PORT = 5432;
 
 const articles = require('./routes/articles.js');
 const products = require('./routes/products.js');
@@ -19,7 +19,6 @@ app.use(bodyParser.json());
 
 app.use('/products', products);
 app.use('/articles', articles);
-
 
 
 app.get('/', (req, res) => {

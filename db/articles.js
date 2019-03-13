@@ -1,3 +1,5 @@
+    const knex = require('../db/index.js');
+
     const storage = [];
 
     const allArticles = () => {
@@ -31,7 +33,7 @@
         item.body = body;
         item.author = author;
         item.urlTitle = title.replace(' ', /%20/);
-        storage.push(item);
+        return item;
     };
 
     const removeArticle = (title) => {

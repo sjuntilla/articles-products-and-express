@@ -1,10 +1,16 @@
 const express = require('express');
 const router = express.Router();
-
+const knex = require('../db/index.js');
 const products = require('../db/products.js');
 
 router.get('/', (req, res) => {
-    res.status(200).render('products', products);
+    // res.status(200).render('products', products);
+    knex.select('*').from('products').then((products) => {
+        console.log(products);
+        res.render('products', {
+            products
+        });
+    })
 });
 
 router.get('/new', (req, res) => {
@@ -13,22 +19,33 @@ router.get('/new', (req, res) => {
 
 router.get('/:id/edit', (req, res) => {
     const paramsId = req.params.id;
-    const product = products.findProduct(paramsId);
-    res.status(200).render('editproduct', product);
+    // const product = products.findProduct(paramsId);
+    knex.select().from('products').where('id', paramsId).then(products => {
+        let item = products[0];
+        res.status(200).render('editproduct', item);
+    });
 });
 
 router.get('/:id', (req, res) => {
     const paramsId = req.params.id;
-    const product = products.findProduct(paramsId);
-    console.log(paramsId);
-    res.status(200).render('getproduct', product);
+    knex.select().from('products').where('id', paramsId).then(products => {
+        let item = products[0];
+        res.status(200).render('getproduct', item);
+    });
+    // const product = products.findProduct(paramsId);
+    // console.log(paramsId);
+    // res.status(200).render('getproduct', product);
 });
 
 router.get('/:id/delete', (req, res) => {
     const paramsId = req.params.id;
-    const product = products.findProduct(paramsId);
-    res.status(200).render('deleteproduct', product);
-})
+    knex.select().from('products').where('id', paramsId).then(products => {
+        let item = products[0];
+        res.status(200).render('deleteproduct', item);
+    });
+    // const product = products.findProduct(paramsId);
+    // res.status(200).render('deleteproduct', product);
+});
 
 //ADDS A NEW PRODUCT
 router.post('/', (req, res) => {
@@ -38,12 +55,15 @@ router.post('/', (req, res) => {
         return res.json({
             'INVALID': 'Price should be a number and name should be a string!'
         })
-    } else {
-        res.status(200);
-        products.addItem(body.name, body.price, body.inventory);
-        console.log(products.allProducts())
-        res.redirect('/products');
-    }
+    } else if (body.name) {
+        knex('products').insert({
+            name: body.name,
+            price: body.price,
+            inventory: body.inventory
+        }).then(() => {
+            res.redirect('/products')
+        });
+    };
 });
 
 //EDITS A PRODUCT
@@ -59,7 +79,7 @@ router.put('/:id/edit', (req, res) => {
 //DELETES A PRODUCT
 router.delete('/:id', (req, res) => {
     let body = req.body;
-    let params = req.params;
+    let paramsId = req.params.id;
     products.removeItem(body.id);
     res.send('Item successfully removed!');
 })

@@ -1,7 +1,8 @@
+    const knex = require('../db/index.js');
     const storage = [];
 
     const allProducts = () => {
-        return storage;
+        return knex.select().from('products');
     };
 
     const findProduct = (id) => {
@@ -30,7 +31,7 @@
         item.price = parseInt(price);
         item.inventory = parseInt(inventory);
         item.id = storage.length + 1;
-        storage.push(item);
+        return item;
     };
 
     const removeItem = (id) => {
