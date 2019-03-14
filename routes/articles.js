@@ -51,7 +51,7 @@ router.get('/:title', (req, res) => {
 //DELETES AN ARTICLE VIA BROWSER
 router.get('/:title/delete', (req, res) => {
     let parsedName = req.params.title.replace(/%20/g, '');
-    knex.select().from('articles').where('title', parsedName).del().then(res.redirect('/articles'));
+    knex.select().from('articles').where('title', parsedName).truncate().then(res.redirect('/articles'));
     console.log(articles.allArticles());
 })
 
@@ -60,7 +60,7 @@ router.delete('/:title', (req, res) => {
     let parsedName = req.params.title.replace(/%20/g, '');
     // let deleted = articles.removeArticle(parsedName);
     // res.render('articles', deleted);
-    knex.select().from('articles').where('title', parsedName).del().then(res.redirect('/articles'));
+    knex.select().from('articles').where('title', parsedName).truncate().then(res.redirect('/articles'));
 });
 
 

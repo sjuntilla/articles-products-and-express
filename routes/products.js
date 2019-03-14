@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/delete', (req, res) => {
     const paramsId = req.params.id;
-    knex.select().from('products').where('id', paramsId).then(products => {
+    knex.select().from('products').where('id', paramsId).truncate().then(products => {
         let item = products[0];
         res.status(200).render('deleteproduct', item);
     });
@@ -69,18 +69,23 @@ router.post('/', (req, res) => {
 //EDITS A PRODUCT
 router.put('/:id/edit', (req, res) => {
     let body = req.body;
-    let params = req.params;
-    let idx = products.findProduct(params.id);
-    products.updateProduct(body.id, body.name);
+    let paramsId = req.params.id;
+    knex.select().from('products').where('id', paramsId).then(articles => {
+        let item = articles[0];
+        res.status(200).render('editproduct', item).redirect(`/${paramsId}`);
+    })
+    // let idx = products.findProduct(params.id);
+    // products.updateProduct(body.id, body.name);
 
-    res.redirect(`/${params.id}`);
+    // res.redirect(`/${params.id}`);
 });
 
-//DELETES A PRODUCT
+//DELETES A PRODUCT via postman
 router.delete('/:id', (req, res) => {
     let body = req.body;
     let paramsId = req.params.id;
-    products.removeItem(body.id);
-    res.send('Item successfully removed!');
+    knex.select().from('products').where('id', paramsId).truncate().then(res.status(200).send('Item successfully removed!'));
+    // products.removeItem(body.id);
+    // res.send('Item successfully removed!');
 })
 module.exports = router;
